@@ -10,6 +10,7 @@ function formatDA(value: number) {
 }
 
 export default function RecentExpenses({ expenses }: Props) {
+  console.log("RecentExpenses component rendered with expenses:", expenses);
   return (
     <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl">
       <div className="flex items-center justify-between border-b border-white/10 p-7">

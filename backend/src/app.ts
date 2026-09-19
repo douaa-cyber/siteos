@@ -6,7 +6,15 @@ import projectRoutes from "./modules/projects/project.route";
 import expenseRoutes from "./modules/expenses/expense.route";
 import categoryRoutes from "./modules/categories/category.route";
 import dashboardRoutes from "./modules/dashboard/dashboard.route";
+import cors from "cors";
 const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 app.use("/api/projects", projectRoutes);

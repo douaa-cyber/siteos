@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+:root {
+  /* Surfaces */
+  --color-surface-ink: #14181c;      /* sidebar / dark surfaces */
+  --color-surface-ink-2: #1d2329;    /* sidebar hover/active */
+  --color-surface-page: #f1f2ee;     /* concrete grey page background */
+  --color-surface-card: #ffffff;
+  --color-border-hair: #dcded8;
+  --color-border-hair-dark: #2b323a;
+
+  /* Text */
+  --color-text-primary: #14181c;
+  --color-text-secondary: #5b6169;
+  --color-text-inverse: #f1f2ee;
+  --color-text-inverse-muted: #9aa3ab;
+
+  /* Brand */
+  --color-brand: #2a5c8a;      /* steel blue */
+  --color-brand-dark: #1e4467;
+
+  /* Semantic status */
+  --color-status-good: #2f7d4f;
+  --color-status-good-bg: #e7f3ec;
+  --color-status-warning: #b46a11;
+  --color-status-warning-bg: #fbf0dd;
+  --color-status-critical: #b3311f;
+  --color-status-critical-bg: #fbe8e5;
+  --color-status-neutral: #5b6169;
+  --color-status-neutral-bg: #eceeec;
+
+  /* System font stacks — no external font fetch, so the build never depends
+     on network access. Swap in next/font/local with real IBM Plex files for
+     the exact intended look; see README for details. */
+  --font-sans: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Roboto Mono", Menlo, Consolas, monospace;
+}
+
+@theme inline {
+  --color-surface-ink: var(--color-surface-ink);
+  --color-surface-ink-2: var(--color-surface-ink-2);
+  --color-surface-page: var(--color-surface-page);
+  --color-surface-card: var(--color-surface-card);
+  --color-border-hair: var(--color-border-hair);
+  --color-border-hair-dark: var(--color-border-hair-dark);
+
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-inverse: var(--color-text-inverse);
+  --color-text-inverse-muted: var(--color-text-inverse-muted);
+
+  --color-brand: var(--color-brand);
+  --color-brand-dark: var(--color-brand-dark);
+
+  --color-status-good: var(--color-status-good);
+  --color-status-good-bg: var(--color-status-good-bg);
+  --color-status-warning: var(--color-status-warning);
+  --color-status-warning-bg: var(--color-status-warning-bg);
+  --color-status-critical: var(--color-status-critical);
+  --color-status-critical-bg: var(--color-status-critical-bg);
+  --color-status-neutral: var(--color-status-neutral);
+  --color-status-neutral-bg: var(--color-status-neutral-bg);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+* {
+  border-color: var(--color-border-hair);
+}
+
+body {
+  background: var(--color-surface-page);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-mono-data {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-feature-settings: "tnum" 1;
+}
+
+::selection {
+  background: var(--color-brand);
+  color: white;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -28,6 +28,31 @@ export async function getProjects(): Promise<ProjectSummary[]> {
   return response.json();
 }
 
+export interface UpdateProjectInput {
+  name?: string;
+  location?: string;
+  clientName?: string;
+  budget?: number;
+  progress?: number;
+  status?: string;
+  startDate?: string;
+  expectedEndDate?: string;
+}
+export async function updateProject(
+  projectId: string,
+  data: UpdateProjectInput,
+) {
+  const response = await fetch(`${API_URL}/projects/${projectId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) {
+    const error = await response.json().catch(() => null);
+    throw new Error(error?.message || "Failed to update project");
+  }
+  return response.json();
+}
 export async function createProject(payload: {
   name: string;
   location: string;
