@@ -4,16 +4,13 @@ import { DashboardData } from "@/types/dashboard";
 import ProjectHeader from "./ProjectHeader";
 import StatCard from "./StatCard";
 import ProjectHealth from "./ProjectHealth";
-import InsightCard from "./InsightCard";
+import AISummaryCard from "./AISummaryCard";
 import ExpenseChart from "./ExpenseChart";
 import RecentExpenses from "./RecentExpenses";
+import AskProjectCard from "../projects/AskProjectCard";
 
 interface Props {
   data: DashboardData;
-}
-
-function formatDA(value: number) {
-  return `${value.toLocaleString("fr-DZ")} DA`;
 }
 
 export default function Dashboard({ data }: Props) {
@@ -32,30 +29,38 @@ export default function Dashboard({ data }: Props) {
         <section className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <StatCard
             label="Total budget"
-            value={formatDA(data.financial.budget)}
+            value={data.financial.budget}
+            format="currency"
             description="Approved project budget"
             type="budget"
+            delay={0}
           />
 
           <StatCard
             label="Total spent"
-            value={formatDA(data.financial.spent)}
+            value={data.financial.spent}
+            format="currency"
             description={`${data.financial.budgetConsumed}% of budget consumed`}
             type="spent"
+            delay={90}
           />
 
           <StatCard
             label="Remaining"
-            value={formatDA(data.financial.remaining)}
+            value={data.financial.remaining}
+            format="currency"
             description="Available project budget"
             type="remaining"
+            delay={180}
           />
 
           <StatCard
             label="Progress"
-            value={`${data.progress.physical}%`}
+            value={data.progress.physical}
+            format="percent"
             description="Physical project completion"
             type="progress"
+            delay={270}
           />
         </section>
 
@@ -63,9 +68,13 @@ export default function Dashboard({ data }: Props) {
         <section className="mt-6 grid gap-6 xl:grid-cols-[1.5fr_1fr]">
           <ProjectHealth progress={data.progress} />
 
-          <InsightCard insight={data.insight} />
+          <AISummaryCard data={data} />
         </section>
 
+        {/* AI assistant */}
+        <section className="mt-6">
+          <AskProjectCard data={data} />
+        </section>
         {/* Analytics */}
         <section className="mt-6 grid gap-6 xl:grid-cols-2">
           <ExpenseChart expenses={data.expensesByCategory} />

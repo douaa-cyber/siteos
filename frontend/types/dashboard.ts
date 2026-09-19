@@ -51,3 +51,16 @@ export interface DashboardData {
   expensesByCategory: ExpenseByCategory[];
   recentExpenses: RecentExpense[];
 }
+// Add this to your existing types/dashboard.ts — don't overwrite the file,
+// just append the interface alongside DashboardData, DashboardProject, etc.
+
+export interface ProjectSummary {
+  id: string;
+  name: string;
+  status: string;
+  location: string;
+  clientName: string;
+  progress: number;
+  budget: number;
+  spent: number;
+}

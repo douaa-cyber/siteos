@@ -1,10 +1,15 @@
+"use client";
+
 import { ArrowUpRight, TrendingUp, Wallet } from "@/components/ui/Icons";
+import { useCountUp, useInView } from "./useCountUp";
 
 interface StatCardProps {
   label: string;
-  value: string;
+  value: number;
+  format: "currency" | "percent";
   description: string;
   type: "budget" | "spent" | "remaining" | "progress";
+  delay?: number;
 }
 
 const themes: Record<
@@ -17,12 +22,24 @@ const themes: Record<
   progress: { colors: ["#A78BFA", "#F472B6"], glow: "rgba(167,139,250,0.35)" },
 };
 
+function formatValue(v: number, format: "currency" | "percent") {
+  const rounded = Math.round(v);
+  return format === "percent"
+    ? `${rounded}%`
+    : `${rounded.toLocaleString("fr-DZ")} DA`;
+}
+
 export default function StatCard({
   label,
   value,
+  format,
   description,
   type,
+  delay = 0,
 }: StatCardProps) {
+  const { ref, inView } = useInView<HTMLDivElement>();
+  const animated = useCountUp(value, inView, 1300);
+
   const icons = {
     budget: <Wallet size={18} strokeWidth={1.7} />,
     spent: <TrendingUp size={18} strokeWidth={1.7} />,
@@ -33,7 +50,19 @@ export default function StatCard({
   const theme = themes[type];
 
   return (
-    <div className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06]">
+    <div
+      ref={ref}
+      className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl hover:border-white/20 hover:bg-white/[0.06]"
+      style={{
+        opacity: inView ? 1 : 0,
+        transform: inView ? "translateY(0)" : "translateY(28px)",
+        transitionProperty:
+          "opacity, transform, background-color, border-color",
+        transitionDuration: "700ms, 700ms, 300ms, 300ms",
+        transitionTimingFunction: "ease",
+        transitionDelay: `${delay}ms, ${delay}ms, 0ms, 0ms`,
+      }}
+    >
       <div
         className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full opacity-20 blur-2xl transition-opacity duration-300 group-hover:opacity-35"
         style={{
@@ -58,7 +87,7 @@ export default function StatCard({
 
       <div className="relative">
         <p className="text-[2rem] font-semibold tracking-tight text-[#F5F5F7] [font-family:var(--font-display)]">
-          {value}
+          {formatValue(animated, format)}
         </p>
 
         <p className="mt-1.5 text-[13px] text-[#9A97A6]">{description}</p>
