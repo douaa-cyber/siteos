@@ -1,15 +1,19 @@
-name: Keep Render site os Backend Awake
+name: Keep Render SiteOs Awake
+
 on:
   schedule:
-    - cron: '*/10 * * * *'  # S'exécute toutes les 10 minutes
-  workflow_dispatch: {}     # Permet de lancer le ping manuellement depuis GitHub si besoin
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
 
 jobs:
   ping:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Ping Render backend health endpoint
+      - name: Ping Render sites
         run: |
-          # ⚠️ REMPLACEZ CETTE URL PAR L'URL RÉELLE DE VOTRE APP RENDER
-          # Si vous n'avez pas de route "/actuator/health", mettez juste l'URL racine "/" ou "/ping"
+          echo "Pinging Backend..."
           curl -fsS https://siteos-hhj6.onrender.com/api/projects || true
+
+          echo "Pinging Frontend..."
+          curl -fsS https://construction-site-knj9.onrender.com || true
