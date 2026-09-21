@@ -38,6 +38,7 @@ export interface UpdateProjectInput {
   startDate?: string;
   expectedEndDate?: string;
 }
+
 export async function updateProject(
   projectId: string,
   data: UpdateProjectInput,
@@ -47,20 +48,41 @@ export async function updateProject(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
+
   if (!response.ok) {
     const error = await response.json().catch(() => null);
     throw new Error(error?.message || "Failed to update project");
   }
+
   return response.json();
 }
-export async function createProject(payload: {
+
+export interface CreateProjectInput {
   name: string;
   location: string;
   clientName: string;
   budget: number;
   startDate: string;
   expectedEndDate: string;
-}): Promise<ProjectSummary> {
+
+  categories: {
+    name: string;
+  }[];
+
+  expenses: {
+    categoryName: string;
+    description: string;
+    amount: number;
+    supplier: string;
+    paymentMethod: string;
+    date: string;
+    notes?: string;
+  }[];
+}
+
+export async function createProject(
+  payload: CreateProjectInput,
+): Promise<ProjectSummary> {
   const response = await fetch(`${API_URL}/projects`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -68,7 +90,8 @@ export async function createProject(payload: {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to create project");
+    const error = await response.json().catch(() => null);
+    throw new Error(error?.message || "Failed to create project");
   }
 
   return response.json();

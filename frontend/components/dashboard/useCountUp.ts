@@ -41,7 +41,7 @@ function easeOutExpo(t: number) {
  */
 export function useCountUp(target: number, active: boolean, duration = 1200) {
   const [value, setValue] = useState(0);
-  const frame = useRef<number>();
+  const frame = useRef<number | null>(null);
 
   useEffect(() => {
     if (!active) return;

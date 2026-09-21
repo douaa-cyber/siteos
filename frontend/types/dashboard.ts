@@ -63,4 +63,6 @@ export interface ProjectSummary {
   progress: number;
   budget: number;
   spent: number;
+  startDate: string;
+  expectedEndDate: string;
 }

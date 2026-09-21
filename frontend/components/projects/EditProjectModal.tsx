@@ -88,7 +88,7 @@ export default function EditProjectModal({
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
+    if (!project) return;
     setError("");
 
     const budget = Number(form.budget);
