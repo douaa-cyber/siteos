@@ -11,7 +11,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://construction-site-knj9.onrender.com/",
+    origin: "https://construction-site-knj9.onrender.com",
     credentials: true,
   }),
 );
